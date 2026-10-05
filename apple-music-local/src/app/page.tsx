@@ -1,94 +1,87 @@
+import Sidebar from "@/components/layout/Sidebar"
+import Player from "@/components/player/Player"
+
 const albums = [
   {
     title: "Midnight Drive",
     artist: "Demo Artist",
-    color: "linear-gradient(135deg, #6366f1, #ec4899)",
+    gradient: "linear-gradient(135deg, #6366f1, #ec4899)",
   },
   {
     title: "Neon City",
     artist: "Demo Artist",
-    color: "linear-gradient(135deg, #06b6d4, #3b82f6)",
+    gradient: "linear-gradient(135deg, #06b6d4, #3b82f6)",
   },
   {
     title: "After Rain",
     artist: "Demo Artist",
-    color: "linear-gradient(135deg, #10b981, #0ea5e9)",
+    gradient: "linear-gradient(135deg, #10b981, #0ea5e9)",
   },
   {
     title: "Digital Dreams",
     artist: "Demo Artist",
-    color: "linear-gradient(135deg, #f97316, #ef4444)",
+    gradient: "linear-gradient(135deg, #f97316, #ef4444)",
+  },
+  {
+    title: "Night Walk",
+    artist: "Demo Artist",
+    gradient: "linear-gradient(135deg, #8b5cf6, #14b8a6)",
   },
 ]
 
 export default function Home() {
   return (
-    <main className="app">
-      <aside className="sidebar">
-        <div className="logo">♫ Local Music</div>
+    <div className="app">
+      <Sidebar />
 
-        <nav>
-          <a className="nav-item active" href="/">
-            <span>⌂</span>
-            ホーム
-          </a>
-
-          <a className="nav-item" href="/library">
-            <span>▣</span>
-            ライブラリ
-          </a>
-
-          <a className="nav-item" href="/albums">
-            <span>◉</span>
-            アルバム
-          </a>
-
-          <a className="nav-item" href="/artists">
-            <span>♙</span>
-            アーティスト
-          </a>
-
-          <a className="nav-item" href="/playlists">
-            <span>☷</span>
-            プレイリスト
-          </a>
-        </nav>
-      </aside>
-
-      <section className="content">
-        <header className="header">
+      <main className="main">
+        <header className="topbar">
           <div>
             <p className="eyebrow">YOUR MUSIC</p>
             <h1>ホーム</h1>
           </div>
 
-          <input
-            className="search"
-            type="search"
-            placeholder="曲、アーティスト、アルバムを検索"
-          />
+          <button className="profile-button">
+            T
+          </button>
         </header>
 
         <section className="hero">
-          <div>
+          <div className="hero-content">
             <p>LOCAL MUSIC PLAYER</p>
-            <h2>あなたの音楽を、<br />あなたのデバイスで。</h2>
-            <button>音楽を追加</button>
+
+            <h2>
+              あなたの音楽を、
+              <br />
+              あなたのデバイスで。
+            </h2>
+
+            <button className="primary-button">
+              音楽を追加
+            </button>
           </div>
         </section>
 
         <section className="section">
-          <div className="section-header">
+          <div className="section-heading">
             <h2>最近のアルバム</h2>
-            <a href="/albums">すべて見る</a>
+
+            <a href="/albums">
+              すべて見る
+            </a>
           </div>
 
           <div className="album-grid">
             {albums.map((album) => (
-              <article className="album-card" key={album.title}>
+              <article
+                className="album-card"
+                key={album.title}
+              >
                 <div
                   className="album-art"
-                  style={{ background: album.color }}
+                  style={{
+                    background: album.gradient,
+                  }}
                 >
                   <span>♫</span>
                 </div>
@@ -99,28 +92,9 @@ export default function Home() {
             ))}
           </div>
         </section>
-      </section>
+      </main>
 
-      <footer className="player">
-        <div className="now-playing">
-          <div className="mini-art" />
-          <div>
-            <strong>まだ再生されていません</strong>
-            <span>曲を選択してください</span>
-          </div>
-        </div>
-
-        <div className="player-controls">
-          <button>↶</button>
-          <button className="play">▶</button>
-          <button>↷</button>
-        </div>
-
-        <div className="volume">
-          🔊
-          <input type="range" min="0" max="100" defaultValue="70" />
-        </div>
-      </footer>
-    </main>
+      <Player />
+    </div>
   )
 }
