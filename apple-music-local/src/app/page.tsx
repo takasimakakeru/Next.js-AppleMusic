@@ -1,5 +1,6 @@
 import Sidebar from "@/components/layout/Sidebar"
 import Player from "@/components/player/Player"
+import FileImporter from "@/components/music/FileImporter"
 
 const albums = [
   {
@@ -56,9 +57,10 @@ export default function Home() {
               あなたのデバイスで。
             </h2>
 
-            <button className="primary-button">
-              音楽を追加
-            </button>
+            <label className="primary-button">
+  音楽を追加
+  <FileImporter />
+</label>
           </div>
         </section>
 
