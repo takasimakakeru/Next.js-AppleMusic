@@ -1,6 +1,10 @@
 "use client"
 
+import { usePlayer } from "@/context/PlayerContext"
+
 export default function FileImporter() {
+  const { playTrack } = usePlayer()
+
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement>
   ) {
@@ -12,14 +16,17 @@ export default function FileImporter() {
 
     const file = files[0]
 
-    console.log("選択されたファイル:", file)
-    console.log("ファイル名:", file.name)
-    console.log("ファイルサイズ:", file.size)
-    console.log("MIME:", file.type)
-
     const url = URL.createObjectURL(file)
 
-    console.log("再生用URL:", url)
+    const track = {
+      id: crypto.randomUUID(),
+      title: file.name.replace(/\.[^/.]+$/, ""),
+      artist: "Unknown Artist",
+      album: "Unknown Album",
+      src: url,
+    }
+
+    playTrack(track)
   }
 
   return (

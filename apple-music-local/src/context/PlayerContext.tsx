@@ -1,6 +1,11 @@
 "use client"
 
-import { createContext, useContext, useState } from "react"
+import {
+  createContext,
+  useContext,
+  useRef,
+  useState,
+} from "react"
 
 export type Track = {
   id: string
@@ -8,7 +13,7 @@ export type Track = {
   artist: string
   album: string
   cover?: string
-  src?: string
+  src: string
 }
 
 type PlayerContextType = {
@@ -18,7 +23,9 @@ type PlayerContextType = {
   togglePlay: () => void
 }
 
-const PlayerContext = createContext<PlayerContextType | undefined>(undefined)
+const PlayerContext = createContext<PlayerContextType | undefined>(
+  undefined
+)
 
 export function PlayerProvider({
   children,
@@ -28,13 +35,44 @@ export function PlayerProvider({
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
 
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
   function playTrack(track: Track) {
     setCurrentTrack(track)
     setIsPlaying(true)
+
+    if (audioRef.current) {
+      audioRef.current.pause()
+    }
+
+    const audio = new Audio(track.src)
+
+    audioRef.current = audio
+
+    audio.play().catch((error) => {
+      console.error("再生に失敗しました:", error)
+      setIsPlaying(false)
+    })
+
+    audio.onended = () => {
+      setIsPlaying(false)
+    }
   }
 
   function togglePlay() {
-    setIsPlaying((prev) => !prev)
+    if (!audioRef.current) {
+      return
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause()
+      setIsPlaying(false)
+    } else {
+      audioRef.current.play().catch((error) => {
+        console.error("再生に失敗しました:", error)
+      })
+      setIsPlaying(true)
+    }
   }
 
   return (
