@@ -12,10 +12,14 @@ export default function FileImporter() {
 
     const file = files[0]
 
-    console.log("選択された曲:", file)
-    console.log("曲名:", file.name)
+    console.log("選択されたファイル:", file)
+    console.log("ファイル名:", file.name)
     console.log("ファイルサイズ:", file.size)
     console.log("MIME:", file.type)
+
+    const url = URL.createObjectURL(file)
+
+    console.log("再生用URL:", url)
   }
 
   return (
